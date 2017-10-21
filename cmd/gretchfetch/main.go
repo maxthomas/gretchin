@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	redisCfg := &redis.Options{Addr: *redisServer + strconv.Itoa(*redisPort)}
+	redisCfg := &redis.Options{Addr: *redisServer + ":" + strconv.Itoa(*redisPort)}
 	if *redisPassword != "" {
 		redisCfg.Password = *redisPassword
 	}
