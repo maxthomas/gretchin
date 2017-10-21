@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strconv"
 
 	"git.apache.org/thrift.git/lib/go/thrift"
@@ -17,10 +18,10 @@ var (
 
 func main() {
 	var (
-		redisServer        = pflag.String("redis-server", "localhost", "redis server to connect to")
-		redisPort          = pflag.Int("redis-port", 6379, "redis port to connect to")
-		redisPassword      = pflag.String("redis-password", "", "redis password")
-		fetchServerAddress = pflag.String("fetch-server", "localhost:9099", "fetch address host:port")
+		redisServer         = pflag.String("redis-server", "localhost", "redis server to connect to")
+		redisPort           = pflag.Int("redis-port", 6379, "redis port to connect to")
+		redisPasswordEnvVar = pflag.String("redis-password", "GRETCHIN_REDIS_PASSWORD", "redis password environment variable")
+		fetchServerAddress  = pflag.String("fetch-server", "localhost:9099", "fetch address host:port")
 	)
 
 	pflag.Parse()
@@ -29,9 +30,11 @@ func main() {
 		return
 	}
 
+	redisPassword, passPresent := os.LookupEnv(*redisPasswordEnvVar)
 	redisCfg := &redis.Options{Addr: *redisServer + ":" + strconv.Itoa(*redisPort)}
-	if *redisPassword != "" {
-		redisCfg.Password = *redisPassword
+	if passPresent {
+		logger.Info("Using redis password")
+		redisCfg.Password = redisPassword
 	}
 	redisCli := redis.NewClient(redisCfg)
 	defer redisCli.Close()
