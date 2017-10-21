@@ -1,0 +1,13 @@
+package: github.com/maxthomas/gretchin
+import:
+- package: git.apache.org/thrift.git
+  submodules:
+    - lib/go/thrift
+  version: 0.10.0
+- package: github.com/hltcoe/goncrete
+- package: go.uber.org/zap
+  version: ^1
+- package: github.com/go-redis/redis
+- package: github.com/spf13/pflag
+testImport:
+- package: github.com/stretchr/testify

@@ -1,0 +1,9 @@
+vendor/
+glide.lock
+
+# executables
+gretchfetch
+!gretchfetch/
+
+gretchstore
+!gretchstore/
