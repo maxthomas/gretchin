@@ -20,6 +20,7 @@ func main() {
 	var (
 		redisServer        = pflag.String("redis-server", "localhost", "redis server to connect to")
 		redisPort          = pflag.Int("redis-port", 6379, "redis port to connect to")
+		redisPassword      = pflag.String("redis-password", "", "redis password")
 		storeServerAddress = pflag.String("store-server", "localhost:12999", "store address host:port")
 	)
 
@@ -30,6 +31,9 @@ func main() {
 	}
 
 	redisCfg := &redis.Options{Addr: *redisServer + ":" + strconv.Itoa(*redisPort)}
+	if *redisPassword != "" {
+		redisCfg.Password = *redisPassword
+	}
 	redisCli := redis.NewClient(redisCfg)
 	defer redisCli.Close()
 	if err := redisCli.Ping().Err(); err != nil {
