@@ -49,8 +49,8 @@ func main() {
 		logger.Fatal("error during socket setup", zap.Error(err))
 	}
 
-	transFactory := gretchin.DefaultTransportFactory()
-	protoFactory := gretchin.DefaultProtocolFactory()
+	transFactory := goncrete.DefaultTransportFactory()
+	protoFactory := goncrete.DefaultProtocolFactory()
 	proc := goncrete.NewFetchCommunicationServiceProcessor(gr)
 	srvr := thrift.NewTSimpleServer4(proc, socket, transFactory, protoFactory)
 	logger.Info("server preparing to serve", zap.String("address", *fetchServerAddress))

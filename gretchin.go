@@ -101,11 +101,3 @@ func (g *Gretchin) Store(comm *goncrete.Communication) error {
 
 	return g.redisClient.Set(comm.ID, commBytes, 0).Err()
 }
-
-func DefaultTransportFactory() thrift.TTransportFactory {
-	return thrift.NewTFramedTransportFactory(thrift.NewTBufferedTransportFactory(8192))
-}
-
-func DefaultProtocolFactory() thrift.TProtocolFactory {
-	return thrift.NewTCompactProtocolFactory()
-}
